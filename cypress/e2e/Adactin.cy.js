@@ -59,7 +59,7 @@ for (let i = 2; i <= 20; i++) {
       const filePath = 'cypress/fixtures/excelData.xlsx';
       const sheetName = 'Sheet1'; // Name of the sheet to update
       const cell = `S${i}`; // Cell address in format "A1"
-      const value = 'Francis';
+      const value = 'Francis Sanjon';
 
       cy.task('writeToExcel', { filePath, sheetName, cell, value }).then(() => {
         cy.log(`Value "${value}" written to cell ${cell} in sheet "${sheetName}".`);

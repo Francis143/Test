@@ -1,14 +1,14 @@
 class LogingPage{
 
 userName(value){
-    cy.get('#username').type(value)
+    cy.get(':nth-child(2) > .oxd-input-group > :nth-child(2) > .oxd-input').type(value)
 }
 password(value){
-    cy.get('#password').type(value)
+    cy.get(':nth-child(3) > .oxd-input-group > :nth-child(2) > .oxd-input').type(value)
 }
 
 loginBtn(){
-    cy.get('#login').click()
+    cy.get('.oxd-button').click()
 }
 
 
