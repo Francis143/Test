@@ -1,38 +1,60 @@
-// cypress/plugins/index.js
-const ExcelJS = require('exceljs');
-const fs = require('fs');
-const path = require('path');
+// const { defineConfig } = require('cypress');
+// const fs = require('fs');
+// const path = require('path');
+// const DocxTemplate = require('docx-templates');
+// const { Document, Packer, ImageRun } = require('docx');
 
-module.exports = (on, config) => {
-  on('task', {
-    writeToExcel({ filePath, sheetName, data }) {
-      const absolutePath = path.resolve(filePath);
+// async function setupNodeEvents(on, config) {
+//   on('task', {
+//     async createWordDocument({ screenshotPath, docPath }) {
+//       if (!fs.existsSync(screenshotPath)) {
+//         console.error(`Screenshot not found at ${screenshotPath}`);
+//         throw new Error(`Screenshot not found at ${screenshotPath}`);
+//       }
 
-      // Ensure the directory exists
-      const dir = path.dirname(absolutePath);
-      if (!fs.existsSync(dir)) {
-        fs.mkdirSync(dir, { recursive: true });
-      }
+//       const imageBuffer = fs.readFileSync(screenshotPath);
 
-      const workbook = new ExcelJS.Workbook();
-      const worksheet = workbook.addWorksheet(sheetName);
+//       try {
+//         // Load the template document
+//         const templatePath = path.resolve('path/to/your/template.docx');
+//         const templateBuffer = fs.readFileSync(templatePath);
 
-      // Set up columns based on the keys of the first object
-      const columns = Object.keys(data[0]).map((key) => ({ header: key, key }));
-      worksheet.columns = columns;
+//         // Create a new document from the template
+//         const doc = new DocxTemplate(templateBuffer);
 
-      // Add rows
-      data.forEach((row) => {
-        worksheet.addRow(row);
-      });
+//         // Replace placeholder with image
+//         const imageBase64 = imageBuffer.toString('base64');
+//         const image = `data:image/png;base64,${imageBase64}`;
 
-      return workbook.xlsx.writeFile(absolutePath)
-        .then(() => {
-          return null; // Indicate success
-        })
-        .catch((err) => {
-          throw err;
-        });
-    }
-  });
-};
+//         const updatedDocument = doc.render({
+//           image_placeholder: image
+//         });
+
+//         // Save the updated document
+//         fs.writeFileSync(docPath, updatedDocument);
+
+//         console.log(`Document updated at ${docPath}`);
+//         return null;
+//       } catch (error) {
+//         console.error('Error creating document:', error);
+//         throw error;
+//       }
+//     }
+//   });
+
+//   return config;
+// }
+
+// module.exports = defineConfig({
+//   projectId: 'uiihvd',
+//   reporter: 'mochawesome',
+//   reporterOptions: {
+//     reportDir: 'mochawesome-report',
+//     overwrite: false,
+//     html: false,
+//     json: true,
+//   },
+//   e2e: {
+//     setupNodeEvents,
+//   },
+// });
